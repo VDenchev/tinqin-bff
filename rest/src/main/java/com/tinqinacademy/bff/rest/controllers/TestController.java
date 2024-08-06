@@ -1,6 +1,7 @@
 package com.tinqinacademy.bff.rest.controllers;
 
 import com.tinqinacademy.comments.api.operations.addcomment.input.AddCommentInput;
+import com.tinqinacademy.comments.api.operations.deletecomment.output.DeleteCommentOutput;
 import com.tinqinacademy.comments.restexport.client.CommentsClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,5 +35,11 @@ public class TestController {
       @RequestParam(required = false) Integer pageSize
   ) {
     return new ResponseEntity<>(commentsClient.getComments(roomId, pageNumber, pageSize), HttpStatus.OK);
+  }
+
+  @DeleteMapping("/comments/{commentId}")
+  public ResponseEntity<?> deleteComment(@PathVariable String commentId) {
+    DeleteCommentOutput output = commentsClient.deleteComment(commentId);
+    return new ResponseEntity<>(output, HttpStatus.OK);
   }
 }
