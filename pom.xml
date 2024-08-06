@@ -25,6 +25,7 @@
         <java.version>21</java.version>
         <revision>0.0.1-SNAPSHOT</revision>
         <comments.version>0.0.1-SNAPSHOT</comments.version>
+        <hotel.version>0.0.1-SNAPSHOT</hotel.version>
         <swagger.version>2.2.0</swagger.version>
         <admin.version>3.0.0</admin.version>
         <feign.jackson.version>13.3</feign.jackson.version>
@@ -50,6 +51,11 @@
             <groupId>com.tinqinacademy.comments</groupId>
             <artifactId>restexport</artifactId>
             <version>${comments.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tinqinacademy.hotel</groupId>
+            <artifactId>restexport</artifactId>
+            <version>${hotel.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.openfeign</groupId>
