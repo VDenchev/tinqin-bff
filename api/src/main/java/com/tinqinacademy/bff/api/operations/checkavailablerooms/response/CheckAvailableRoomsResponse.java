@@ -1,4 +1,4 @@
-package com.tinqinacademy.bff.api.operations.checkavailableroom.response;
+package com.tinqinacademy.bff.api.operations.checkavailablerooms.response;
 
 import com.tinqinacademy.bff.api.base.OperationResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
