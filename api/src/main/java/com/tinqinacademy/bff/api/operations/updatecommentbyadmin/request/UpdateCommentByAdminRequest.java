@@ -1,4 +1,4 @@
-package com.tinqinacademy.bff.api.operations.updatecomment.updatecommentbyadmin.request;
+package com.tinqinacademy.bff.api.operations.updatecommentbyadmin.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tinqinacademy.bff.api.base.OperationRequest;

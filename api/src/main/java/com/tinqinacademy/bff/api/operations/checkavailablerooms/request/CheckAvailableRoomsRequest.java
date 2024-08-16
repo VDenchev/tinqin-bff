@@ -1,4 +1,4 @@
-package com.tinqinacademy.bff.api.operations.checkavailableroom.request;
+package com.tinqinacademy.bff.api.operations.checkavailablerooms.request;
 
 import com.tinqinacademy.bff.api.base.OperationRequest;
 import com.tinqinacademy.bff.api.enums.BathroomType;

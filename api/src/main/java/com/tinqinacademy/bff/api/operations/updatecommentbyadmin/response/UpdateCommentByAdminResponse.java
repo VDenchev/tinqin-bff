@@ -1,4 +1,4 @@
-package com.tinqinacademy.bff.api.operations.updatecomment.updatecommentbyadmin.response;
+package com.tinqinacademy.bff.api.operations.updatecommentbyadmin.response;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.tinqinacademy.bff.api.base.OperationResponse;
