@@ -28,10 +28,12 @@ import com.tinqinacademy.bff.api.operations.updatecomment.response.UpdateComment
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.vavr.control.Either;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -155,6 +157,8 @@ public class HotelController extends BaseController {
       )
   })
   @PostMapping(BOOK_ROOM)
+  @PreAuthorize("hasRole('USER')")
+  @SecurityRequirement(name = "bearerAuth")
   public ResponseEntity<Response> bookRoom(@PathVariable String roomId, @RequestBody BookRoomRequest request) {
     request.setRoomId(roomId);
     Either<? extends ErrorResponse, BookRoomResponse> response = bookRoomOperation.process(request);
@@ -186,6 +190,8 @@ public class HotelController extends BaseController {
       )
   })
   @DeleteMapping(REMOVE_BOOKING)
+  @PreAuthorize("hasRole('USER')")
+  @SecurityRequirement(name = "bearerAuth")
   public ResponseEntity<Response> removeBooking(@PathVariable UUID bookingId) {
     RemoveBookingRequest request = RemoveBookingRequest.builder()
         .bookingId(bookingId.toString())
@@ -241,9 +247,15 @@ public class HotelController extends BaseController {
       @ApiResponse(
           description = "Validation error",
           responseCode = "422"
+      ),
+      @ApiResponse(
+          description = "You are not authorized",
+          responseCode = "401"
       )
   })
   @PostMapping(ADD_COMMENT)
+  @PreAuthorize("hasRole('USER')")
+  @SecurityRequirement(name = "bearerAuth")
   public ResponseEntity<Response> addComment(
       @PathVariable String roomId,
       @RequestBody AddCommentRequest request
@@ -274,6 +286,8 @@ public class HotelController extends BaseController {
       )
   })
   @PatchMapping(UPDATE_COMMENT)
+  @PreAuthorize("hasRole('USER')")
+  @SecurityRequirement(name = "bearerAuth")
   public ResponseEntity<Response> updateComment(
       @PathVariable String commentId,
       @RequestBody UpdateCommentRequest request
