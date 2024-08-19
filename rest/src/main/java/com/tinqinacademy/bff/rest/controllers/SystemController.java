@@ -59,7 +59,6 @@ import static com.tinqinacademy.bff.api.apiroutes.RestApiRoutes.DELETE_COMMENT;
 
 @RestController
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ADMIN')")
 @SecurityRequirement(name = "bearerAuth")
 public class SystemController extends BaseController {
 
@@ -106,6 +105,7 @@ public class SystemController extends BaseController {
       )
   })
   @PostMapping(REGISTER_VISITORS)
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Response> registerVisitors(
       @RequestBody RegisterVisitorsRequest request,
       @PathVariable String bookingId
@@ -135,6 +135,7 @@ public class SystemController extends BaseController {
       )
   })
   @GetMapping(SEARCH_VISITORS)
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Response> searchVisitors(
       @RequestParam(required = false) LocalDate startDate,
       @RequestParam(required = false) LocalDate endDate,
@@ -197,6 +198,7 @@ public class SystemController extends BaseController {
       ),
   })
   @PostMapping(ADD_ROOM)
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Response> addRoom(@RequestBody AddRoomRequest request) {
     Either<? extends ErrorResponse, AddRoomResponse> response = addRoomOperation.process(request);
 
@@ -234,6 +236,7 @@ public class SystemController extends BaseController {
       ),
   })
   @PutMapping(UPDATE_ROOM)
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Response> updateRoom(
       @PathVariable String roomId,
       @RequestBody UpdateRoomRequest request
@@ -276,6 +279,7 @@ public class SystemController extends BaseController {
       ),
   })
   @PatchMapping(PARTIAL_UPDATE_ROOM)
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Response> partialUpdateRoom(
       @PathVariable String roomId,
       @RequestBody PartialUpdateRoomRequest request
@@ -313,6 +317,7 @@ public class SystemController extends BaseController {
       ),
   })
   @DeleteMapping(DELETE_ROOM)
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Response> deleteRoom(@PathVariable("roomId") String roomId) {
     DeleteRoomRequest request = DeleteRoomRequest.builder()
         .id(roomId)
@@ -348,6 +353,7 @@ public class SystemController extends BaseController {
       )
   })
   @PutMapping(UPDATE_COMMENT_BY_ADMIN)
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Response> updateCommentByAdmin(
       @PathVariable String commentId,
       @RequestBody UpdateCommentByAdminRequest request
@@ -379,6 +385,7 @@ public class SystemController extends BaseController {
       ),
   })
   @DeleteMapping(DELETE_COMMENT)
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Response> deleteComment(
       @PathVariable String commentId
   ) {

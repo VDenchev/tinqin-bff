@@ -44,17 +44,17 @@ public class SecurityConfig {
   public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
         .cors(AbstractHttpConfigurer::disable)
-        .sessionManagement(s ->
-            s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        )
         .authorizeHttpRequests(auth -> auth
             .requestMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
             .requestMatchers(
                 "/v3/api-docs/**",
                 "/swagger-ui/**",
                 "/swagger-ui.html").permitAll()
-            .anyRequest().authenticated())
+            .anyRequest().permitAll())
         .httpBasic(Customizer.withDefaults())
+        .sessionManagement(s ->
+            s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        )
         .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
