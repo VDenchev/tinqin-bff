@@ -1,9 +1,6 @@
 package com.tinqinacademy.bff.api.operations.getroom.response;
 
 import com.tinqinacademy.bff.api.base.OperationResponse;
-import com.tinqinacademy.bff.api.enums.BathroomType;
-import com.tinqinacademy.bff.api.enums.BedType;
-import com.tinqinacademy.bff.api.models.response.DatesOccupied;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -33,10 +31,10 @@ public class GetRoomResponse implements OperationResponse {
   @Schema(example = "1")
   private Integer floor;
   @Schema(example = "[\"single\", \"double\"]")
-  private List<BedType> bedSizes;
+  private List<String> bedSizes;
   @Schema(example = "private")
-  private BathroomType bathroomType;
+  private String bathroomType;
   @Schema(example = "2")
   private Integer bedCount;
-  private DatesOccupied datesOccupied;
+  private List<LocalDate> datesOccupied;
 }
