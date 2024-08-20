@@ -10,6 +10,7 @@ import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.tinqinacademy.hotel.restexport.client.HotelClient;
@@ -18,9 +19,12 @@ import org.springframework.security.core.userdetails.User;
 @Configuration
 public class ClientConfiguration {
 
-  private static final String COMMENTS_CLIENT_URL = "http://localhost:8081";
-  private static final String HOTEL_CLIENT_URL = "http://localhost:8080";
-  private static final String AUTH_CLIENT_URL = "http://localhost:8082";
+  @Value("${hotel.client.url}")
+  private String HOTEL_CLIENT_URL;
+  @Value("${comments.client.url}")
+  private String COMMENTS_CLIENT_URL;
+  @Value("${auth.client.url}")
+  private String AUTH_CLIENT_URL;
 
   private final ObjectMapper objectMapper;
 
