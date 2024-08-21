@@ -3,6 +3,7 @@ package com.tinqinacademy.bff.rest.controllers;
 import com.tinqinacademy.bff.api.base.Response;
 import com.tinqinacademy.bff.api.errors.ErrorResponse;
 import com.tinqinacademy.bff.api.models.request.VisitorDetailsRequest;
+import com.tinqinacademy.bff.api.models.response.CustomUser;
 import com.tinqinacademy.bff.api.operations.addroom.operation.AddRoomOperation;
 import com.tinqinacademy.bff.api.operations.addroom.request.AddRoomRequest;
 import com.tinqinacademy.bff.api.operations.addroom.response.AddRoomResponse;
@@ -336,6 +337,10 @@ public class SystemController extends BaseController {
           responseCode = "200"
       ),
       @ApiResponse(
+          description = "Room with provided roomNo doesn't exist",
+          responseCode = "400"
+      ),
+      @ApiResponse(
           description = "Comment with provided id does not exist",
           responseCode = "404"
       ),
@@ -359,6 +364,8 @@ public class SystemController extends BaseController {
       @RequestBody UpdateCommentByAdminRequest request
   ) {
     request.setCommentId(commentId);
+    CustomUser user = getUserFromContext();
+    request.setUserId(user.getUserId().toString());
     Either<? extends ErrorResponse, UpdateCommentByAdminResponse> response = updateCommentByAdminOperation.process(request);
 
     return createResponse(response, HttpStatus.OK);
