@@ -23,20 +23,26 @@ public class AddCommentRequest implements OperationRequest {
 
   @JsonIgnore
   @UUID(message = "Room id has to be a valid UUID string")
+  @NotBlank(message = "Room id cannot be blank")
   private String roomId;
 
-  @NotBlank
-  @Size(min = 2, max = 40)
+  @JsonIgnore
+  @UUID(message = "User id has to be a valid UUID string")
+  @NotBlank(message = "User id cannot be blank")
+  private String userId;
+
+  @NotBlank(message = "First name cannot be blank")
+  @Size(min = 2, max = 40, message = "First name must be between 2 and 40 characters")
   @Schema(example = "Dimcho")
   private String firstName;
 
-  @NotBlank
-  @Size(min = 2, max = 40)
+  @NotBlank(message = "Last name cannot be blank")
+  @Size(min = 2, max = 40, message = "Last name must be between 2 and 40 characters")
   @Schema(example = "Yasenov")
   private String lastName;
 
-  @NotBlank
-  @Size(max = 1_000)
+  @NotBlank(message = "Content cannot be blank")
+  @Size(max = 1_000, message = "Content must be at max 1000 characters")
   @Schema(example = "Very good room, I would recommend to all my friends!")
   private String content;
 }
