@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @ToString
 public class CommentDetailsResponse {
 
-  @Schema(example = "Comment UUID")
+  @Schema(example = "Comment id")
   private String id;
 
   @Schema(example = "Lando")
@@ -29,6 +29,9 @@ public class CommentDetailsResponse {
 
   @Schema(example = "Best hotel ever.")
   private String content;
+
+  @Schema(example = "User id")
+  private String publishedBy;
 
   @Schema(example = "2024-07-12T08:47:49.450Z")
   private LocalDateTime publishDate;

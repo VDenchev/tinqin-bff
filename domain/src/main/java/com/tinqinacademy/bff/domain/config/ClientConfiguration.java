@@ -4,20 +4,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.tinqinacademy.authentication.api.models.CustomUserDetails;
 import com.tinqinacademy.authentication.restexport.AuthClient;
-import com.tinqinacademy.bff.domain.deserializers.UserDeserializer;
+import com.tinqinacademy.bff.domain.deserializers.CustomUserDetailsDeserializer;
 import com.tinqinacademy.comments.restexport.client.CommentsClient;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.openfeign.support.PageJacksonModule;
-import org.springframework.cloud.openfeign.support.SortJacksonModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.tinqinacademy.hotel.restexport.client.HotelClient;
-import org.springframework.security.core.userdetails.User;
 
 @Configuration
 public class ClientConfiguration {
@@ -32,13 +30,13 @@ public class ClientConfiguration {
   private final ObjectMapper objectMapper;
 
   public ClientConfiguration() {
-    this.objectMapper = new ObjectMapper().registerModules(new JavaTimeModule(), new PageJacksonModule(), new SortJacksonModule())
+    this.objectMapper = new ObjectMapper().registerModules(new JavaTimeModule())
         .enable(SerializationFeature.INDENT_OUTPUT)
         .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
         .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
         .disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
     SimpleModule module = new SimpleModule();
-    module.addDeserializer(User.class, new UserDeserializer());
+    module.addDeserializer(CustomUserDetails.class, new CustomUserDetailsDeserializer());
     objectMapper.registerModule(module);
   }
 

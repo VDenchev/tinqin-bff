@@ -1,6 +1,5 @@
 package com.tinqinacademy.bff.api.operations.getcomments.response;
 
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.tinqinacademy.bff.api.base.OperationResponse;
 import com.tinqinacademy.bff.api.models.response.CommentDetailsResponse;
 import lombok.AllArgsConstructor;
@@ -9,7 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,6 +19,11 @@ import org.springframework.data.domain.Page;
 @ToString
 public class GetCommentsResponse implements OperationResponse {
 
-  @JsonUnwrapped
-  private Page<CommentDetailsResponse> page;
+  private List<CommentDetailsResponse> comments;
+  private Integer pageNumber;
+  private Integer totalPages;
+  private Long totalElements;
+  private Integer pageSize;
+  private Integer numberOfElements;
+  private Boolean empty;
 }

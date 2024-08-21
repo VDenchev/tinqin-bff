@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.tinqinacademy.bff.api.base.OperationRequest;
 import com.tinqinacademy.bff.api.models.request.RoomDetailsRequest;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,5 +28,6 @@ public class PartialUpdateRoomRequest implements OperationRequest {
 
   @JsonIgnore
   @UUID(message = "RoomId has to be a valid UUID string")
+  @NotBlank(message = "Room id cannot be blank")
   private String roomId;
 }

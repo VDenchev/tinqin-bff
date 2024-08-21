@@ -4,6 +4,7 @@ import com.tinqinacademy.bff.api.base.Response;
 import com.tinqinacademy.bff.api.enums.BathroomType;
 import com.tinqinacademy.bff.api.enums.BedType;
 import com.tinqinacademy.bff.api.errors.ErrorResponse;
+import com.tinqinacademy.bff.api.models.response.CustomUser;
 import com.tinqinacademy.bff.api.operations.addcomment.operation.AddCommentOperation;
 import com.tinqinacademy.bff.api.operations.addcomment.request.AddCommentRequest;
 import com.tinqinacademy.bff.api.operations.addcomment.response.AddCommentResponse;
@@ -215,6 +216,10 @@ public class HotelController extends BaseController {
       @ApiResponse(
           description = "Invalid page number",
           responseCode = "400"
+      ),
+      @ApiResponse(
+          description = "Room with provided id doesn't exist",
+          responseCode = "404"
       )
   })
   @GetMapping(GET_COMMENTS)
@@ -261,6 +266,10 @@ public class HotelController extends BaseController {
       @RequestBody AddCommentRequest request
   ) {
     request.setRoomId(roomId);
+
+    CustomUser user = getUserFromContext();
+    request.setUserId(user.getUserId().toString());
+
     Either<? extends ErrorResponse, AddCommentResponse> response = addCommentOperation.process(request);
     return createResponse(response, HttpStatus.CREATED);
   }
@@ -293,6 +302,10 @@ public class HotelController extends BaseController {
       @RequestBody UpdateCommentRequest request
   ) {
     request.setCommentId(commentId);
+
+    CustomUser user = getUserFromContext();
+    request.setUserId(user.getUserId().toString());
+
     Either<? extends ErrorResponse, UpdateCommentResponse> response = updateCommentOperation.process(request);
 
     return createResponse(response, HttpStatus.OK);
