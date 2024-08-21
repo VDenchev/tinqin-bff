@@ -4,19 +4,25 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.tinqinacademy.authentication.api.models.CustomUserDetails;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-public class UserDeserializer extends JsonDeserializer<User> {
+@Slf4j
+public class CustomUserDetailsDeserializer extends JsonDeserializer<CustomUserDetails> {
 
   @Override
-  public User deserialize(JsonParser jsonParser, DeserializationContext ctxt) throws IOException {
+  public CustomUserDetails deserialize(JsonParser jsonParser, DeserializationContext ctxt) throws IOException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
+    log.info("node: {}", node);
 
+    String userId = node.get("userId").asText();
     String username = node.get("username").asText();
     String password = node.get("password").asText();
     boolean enabled = node.get("enabled").asBoolean();
@@ -24,11 +30,20 @@ public class UserDeserializer extends JsonDeserializer<User> {
     boolean accountNonLocked = node.get("accountNonLocked").asBoolean();
     boolean credentialsNonExpired = node.get("credentialsNonExpired").asBoolean();
 
-    List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+    List<GrantedAuthority> authorities = new ArrayList<>();
     for (JsonNode authorityNode : node.get("authorities")) {
       authorities.add(new SimpleGrantedAuthority(authorityNode.get("authority").asText()));
     }
 
-    return new User(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+    return CustomUserDetails.builder()
+        .userId(UUID.fromString(userId))
+        .username(username)
+        .password(password)
+        .enabled(enabled)
+        .accountNonExpired(accountNonExpired)
+        .accountNonLocked(accountNonLocked)
+        .credentialsNonExpired(credentialsNonExpired)
+        .authorities(authorities)
+        .build();
   }
 }
