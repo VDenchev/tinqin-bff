@@ -23,14 +23,16 @@ public class UpdateCommentByAdminRequest implements OperationRequest {
 
   @JsonIgnore
   @UUID(message = "Comment id has to be a valid UUID string")
+  @NotBlank(message = "Comment id must not be blank")
   private String commentId;
 
-  @NotBlank(message = "Room number must not be blank")
-  private String roomNumber;
+  @JsonIgnore
+  @UUID(message = "User id has to be a valid UUID string")
+  @NotBlank(message = "User id must not be blank")
+  private String userId;
 
-  @NotBlank(message = "Room id must not be blank")
-  @UUID(message = "Room id has to be a valid UUID string")
-  private String roomId;
+  @NotBlank(message = "Room number must not be blank")
+  private String roomNo;
 
   @NotBlank(message = "First name must not be blank")
   @Size(min = 2, max = 40, message = "First name must be between 2 and 40 characters long")
