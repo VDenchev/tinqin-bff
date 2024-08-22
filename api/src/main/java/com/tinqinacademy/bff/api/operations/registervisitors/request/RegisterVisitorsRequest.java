@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tinqinacademy.bff.api.base.OperationRequest;
 import com.tinqinacademy.bff.api.models.request.VisitorDetailsRequest;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +28,7 @@ public class RegisterVisitorsRequest implements OperationRequest {
   private List<@Valid VisitorDetailsRequest> visitors;
 
   @JsonIgnore
-  @UUID(message = "BookingId has to be a valid UUID string")
+  @UUID(message = "Booking id has to be a valid UUID string")
+  @NotBlank(message = "Booking id must not be blank")
   private String bookingId;
 }
