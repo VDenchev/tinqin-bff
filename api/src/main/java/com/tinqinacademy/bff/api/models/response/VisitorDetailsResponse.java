@@ -30,9 +30,6 @@ public class VisitorDetailsResponse {
   @Schema(example = "Alonso")
   private String lastName;
 
-  @Schema(example = "+359 875428374")
-  private String phoneNo;
-
   @Schema(example = "9205127401")
   private String idCardNo;
 

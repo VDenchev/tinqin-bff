@@ -1,8 +1,6 @@
 package com.tinqinacademy.bff.rest.controllers;
 
 import com.tinqinacademy.bff.api.base.Response;
-import com.tinqinacademy.bff.api.enums.BathroomType;
-import com.tinqinacademy.bff.api.enums.BedType;
 import com.tinqinacademy.bff.api.errors.ErrorResponse;
 import com.tinqinacademy.bff.api.models.response.CustomUser;
 import com.tinqinacademy.bff.api.operations.addcomment.operation.AddCommentOperation;
@@ -48,7 +46,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 import static com.tinqinacademy.bff.api.apiroutes.RestApiRoutes.BOOK_ROOM;
 import static com.tinqinacademy.bff.api.apiroutes.RestApiRoutes.CHECK_AVAILABLE_ROOMS;
@@ -96,8 +93,8 @@ public class HotelController extends BaseController {
         .startDate(startDate)
         .endDate(endDate)
         .bedCount(bedCount)
-        .bedSizes(bedSizes.stream().map(BedType::getByCode).toList())
-        .bathroomType(BathroomType.getByCode(bathroomType))
+        .bedSizes(bedSizes)
+        .bathroomType(bathroomType)
         .build();
 
     Either<? extends ErrorResponse, CheckAvailableRoomsResponse> response = checkAvailableRoomsOperation.process(request);
@@ -162,6 +159,10 @@ public class HotelController extends BaseController {
   @SecurityRequirement(name = "bearerAuth")
   public ResponseEntity<Response> bookRoom(@PathVariable String roomId, @RequestBody BookRoomRequest request) {
     request.setRoomId(roomId);
+
+    CustomUser user = getUserFromContext();
+    request.setUserId(user.getUserId().toString());
+
     Either<? extends ErrorResponse, BookRoomResponse> response = bookRoomOperation.process(request);
 
     return createResponse(response, HttpStatus.OK);
@@ -193,9 +194,12 @@ public class HotelController extends BaseController {
   @DeleteMapping(REMOVE_BOOKING)
   @PreAuthorize("hasRole('USER')")
   @SecurityRequirement(name = "bearerAuth")
-  public ResponseEntity<Response> removeBooking(@PathVariable UUID bookingId) {
+  public ResponseEntity<Response> removeBooking(@PathVariable String bookingId) {
+    CustomUser user = getUserFromContext();
+    String userId = user.getUserId().toString();
     RemoveBookingRequest request = RemoveBookingRequest.builder()
-        .bookingId(bookingId.toString())
+        .bookingId(bookingId)
+        .userId(userId)
         .build();
     Either<? extends ErrorResponse, RemoveBookingResponse> response = removeBookingOperation.process(request);
 

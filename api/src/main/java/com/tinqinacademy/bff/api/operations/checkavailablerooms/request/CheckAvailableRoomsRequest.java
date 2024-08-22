@@ -22,8 +22,8 @@ import java.util.List;
 public class CheckAvailableRoomsRequest implements OperationRequest {
 
   private Integer bedCount;
-  private BathroomType bathroomType;
-  private List<BedType> bedSizes;
+  private String bathroomType;
+  private List<String> bedSizes;
   private LocalDate startDate;
   private LocalDate endDate;
 }
